@@ -10,6 +10,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
@@ -34,7 +36,7 @@ import javax.annotation.Nullable;
 import static com.bumptech.glide.request.RequestOptions.signatureOf;
 
 class FastImageViewConverter {
-    private static final Drawable TRANSPARENT_DRAWABLE = new ColorDrawable(Color.TRANSPARENT);
+    private static final Drawable TRANSPARENT_DRAWABLE = new ColorDrawable(0xFFFF0000);
 
     private static final Map<String, FastImageCacheControl> FAST_IMAGE_CACHE_CONTROL_MAP =
             new HashMap<String, FastImageCacheControl>() {{
@@ -106,12 +108,14 @@ class FastImageViewConverter {
                 break;
         }
 
+        Drawable mDefaultSource = ResourcesCompat.getDrawable(context.getResources(), R.drawable.placeholder, null);
         RequestOptions options = new RequestOptions()
             .diskCacheStrategy(diskCacheStrategy)
             .onlyRetrieveFromCache(onlyFromCache)
             .skipMemoryCache(skipMemoryCache)
             .priority(priority)
-            .placeholder(TRANSPARENT_DRAWABLE);
+            .fallback(mDefaultSource)
+            .placeholder(mDefaultSource);
         
         if (imageSource.isResource()) {
             // Every local resource (drawable) in Android has its own unique numeric id, which are
