@@ -19,7 +19,7 @@
     },
     "license": "(MIT AND Apache-2.0)",
     "author": "Dylan Vann <dylan@dylanvann.com> (https://dylanvann.com)",
-    "main": "dist/index.js",
+    "main": "dist/index.tsx",
     "module": "dist/react-native-fast-image.esm.js",
     "typings": "dist/index.d.ts",
     "files": [
