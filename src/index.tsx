@@ -166,8 +166,13 @@ function FastImageBase({
             </View>
         )
     }
-
-    const resolvedSource = Image.resolveAssetSource(source as any)
+    let resolvedSource
+    if (source && (source as Source).uri?.trim()?.length === 0) {
+        resolvedSource = { uri: 'http://blank' }
+        console.log('[FastImage] uri is empty, resolvedSource', resolvedSource)
+    } else {
+        resolvedSource = Image.resolveAssetSource(source as any)
+    }
 
     return (
         <View style={[styles.imageContainer, style]} ref={forwardedRef}>
